@@ -1,0 +1,33 @@
+{
+    "name": "begrotingen-api",
+    "version": "1.0.0",
+    "description": "GraphQL-api for our budgets app",
+    "main": "index.js",
+    "scripts": {
+        "dev": "NODE_ENV=development nodemon index.js",
+        "start": "NODE_ENV=production node index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/HaegepoortersDestelbergen/begrotingen-api.git"
+    },
+    "keywords": [],
+    "author": "Haegepoorters Destelbergen",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/HaegepoortersDestelbergen/begrotingen-api/issues"
+    },
+    "homepage": "https://github.com/HaegepoortersDestelbergen/begrotingen-api#readme",
+    "devDependencies": {
+        "heroku": "^7.47.3",
+        "nodemon": "^2.0.6"
+    },
+    "dependencies": {
+        "apollo-server": "^2.19.0",
+        "bcrypt": "^5.0.0",
+        "dotenv": "^8.2.0",
+        "graphql": "^15.4.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^5.10.15"
+    }
+}
