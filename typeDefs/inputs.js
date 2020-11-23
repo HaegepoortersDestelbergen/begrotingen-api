@@ -9,9 +9,14 @@ module.exports = gql`
     input UserInput {
         name: String
         email: String
-        access: [String]
         role: String
         password: String
+        access: [AccessInput]
+    }
+    
+    input AccessInput {
+        id: String
+        type: String
     }
     
     input GroupInput {

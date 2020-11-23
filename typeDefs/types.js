@@ -8,8 +8,13 @@ module.exports = gql`
         name: String
         email: String
         password: String
-        access: [String]
+        access: [Access]
         role: String
+    }
+    
+    type Access {
+        id: String
+        type: String
     }
     
     type Group {

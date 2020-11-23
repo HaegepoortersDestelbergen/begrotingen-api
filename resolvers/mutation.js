@@ -8,6 +8,8 @@ module.exports = {
         register: async (parent, { user }, context) => {
             const { email, password } = user;
             
+            console.log(user);
+            
             // check if user exists
             if (await User.exists({ email })) throw new Error('User already exists')
             
@@ -28,6 +30,15 @@ module.exports = {
             return newUser
         },
         
+        deleteUser: async (parent, { id }, context) => {
+            try {
+                const deleted = await User.deleteOne({ _id: id })
+                return await deleted;
+            } catch (err) {
+                console.log(err)
+            }
+        },
+        
         addGroup: async (parent, { name, icon }, context) => {
             try {
                 const added = await Group.create({ name, icon })
@@ -40,7 +51,7 @@ module.exports = {
         deleteGroup: async (parent, { id }, context) => {
             try {
                 const deleted = await Group.deleteOne({ _id: id })
-                return await {id: id};
+                return await deleted;
             } catch (err) {
                 console.log(err)
             }
