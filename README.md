@@ -8,7 +8,7 @@ Technology:
 - MongoDB
 - Mongoose
 
-... is the repo for the front-end.
+[begrotingen](https://github.com/HaegepoortersDestelbergen/begrotingen) is the repo for the front-end.
 
 ## Available Scripts
 
