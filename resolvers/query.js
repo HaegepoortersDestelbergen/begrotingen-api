@@ -1,7 +1,8 @@
-const { User, Group } = require('../mongo/models')
+const { User, Group, Budget, Cost } = require('../mongo/models')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
+const budget = require('../mongo/schemas/budget');
 require('dotenv/config');
 const { TOKEN_SALT } = process.env;
 
@@ -32,14 +33,44 @@ module.exports = {
             }
         },
         
-        group: async (parent, { id }, context) => {
-            if (id) return await Group.find({ _id: id })
-            else return await Group.find({})
+        group: async (parent, { id, access }, context) => {
+            console.log(access);
+            
+            try {
+                if (id) return await Group.find({ _id: id })
+                else return await Group.find({})
+            } catch (err) {
+                throw new Error(err);
+            }
         },
         
-        user: async (parent, { id }, context) => {
-            if (id) return await User.find({ _id: id })
-            else return await User.find({})
+        user: async (parent, { id }, context) => {                        
+            try {
+                if (id) return await User.find({ _id: id })
+                else return await User.find({})
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        budget: async (parent, { id, groupId }, context) => {
+            try {
+                if (id) return await Budget.find({ _id: id });
+                else if (groupId) return await Budget.find({ groupId: groupId });
+                else return await Budget.find({});
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        cost: async (parent, {id, budgetId }, context) => {
+            try {
+                if (id) return await Cost.find({ _id: id })
+                else if (budgetId) return await Cost.find({ budgetId: budgetId })
+                else return await Cost.find({});
+            } catch (err) {
+                throw new Error(err);
+            }
         }
     },
 }

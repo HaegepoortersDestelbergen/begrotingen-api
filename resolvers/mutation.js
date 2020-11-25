@@ -1,5 +1,5 @@
 const pubsub = require('./pubsub');
-const { User, Group } = require('../mongo/models');
+const { User, Group, Budget, Cost } = require('../mongo/models');
 const bcrypt = require('bcrypt');
 const { AuthenticationError } = require('apollo-server');
 
@@ -53,7 +53,34 @@ module.exports = {
                 const deleted = await Group.deleteOne({ _id: id })
                 return await deleted;
             } catch (err) {
-                console.log(err)
+                throw new Error(err);
+            }
+        },
+        
+        addBudget: async (parent, { budget }, context) => {            
+            try {
+                const added = await Budget.create({...budget, created: new Date()});
+                return await added;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        deleteBudget: async (parent, { id }, context) => {
+            try {
+                const deleted = await Budget.deleteOne({ _id: id })
+                return await deleted;
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        addCost: async (parent, { cost }, context) => {
+            try {
+                const added = await Cost.create({...cost, created: new Date()});
+                return await added;
+            } catch (err) {
+                throw new Error(err);
             }
         }
     }

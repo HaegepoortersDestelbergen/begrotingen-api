@@ -5,8 +5,8 @@ module.exports = new Schema({
     email: String,
     password: String,
     access: [{
-        id: String,
+        budgetId: String,
         type: { type: String }
     }],
-    role: String
+    role: Number
 })

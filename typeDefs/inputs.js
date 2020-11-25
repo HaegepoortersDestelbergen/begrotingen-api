@@ -1,4 +1,4 @@
-const  { gql } = require('apollo-server');
+const { gql } = require('apollo-server');
 
 module.exports = gql`   
     input Login {
@@ -9,13 +9,13 @@ module.exports = gql`
     input UserInput {
         name: String
         email: String
-        role: String
+        role: Int
         password: String
         access: [AccessInput]
     }
     
     input AccessInput {
-        id: String
+        budgetId: String
         type: String
     }
     
@@ -26,9 +26,11 @@ module.exports = gql`
     
     input BudgetInput {
         title: String
-        user: ID
-        people: [PeopleInput]
-        period: [PeriodInput]
+        comment: String
+        groupId: ID
+        people: PeopleInput
+        period: PeriodInput
+        created: Date
     }
     
     input PeriodInput {
@@ -42,11 +44,12 @@ module.exports = gql`
     }
     
     input CostInput {
+        budgetId: ID
         title: String
-        type: String
-        when: String
-        category: String
         comment: String
+        category: CostCategory
+        type: CostType
+        when: CostWhen
         amount: Float
     }
 `;

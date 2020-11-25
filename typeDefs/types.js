@@ -9,11 +9,11 @@ module.exports = gql`
         email: String
         password: String
         access: [Access]
-        role: String
+        role: Int
     }
     
     type Access {
-        id: String
+        budgetId: String
         type: String
     }
     
@@ -26,7 +26,8 @@ module.exports = gql`
     type Budget {
         id: ID
         title: String
-        user: ID
+        comment: String
+        groupId: ID
         people: People
         period: Period
         created: Date
@@ -34,12 +35,12 @@ module.exports = gql`
     
     type Cost {
         id: ID
-        budget: ID
+        budgetId: ID
         title: String
-        type: String
-        when: String
-        category: String
         comment: String
+        category: CostCategory
+        type: CostType
+        when: CostWhen
         amount: Float
     }
     
