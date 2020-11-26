@@ -82,6 +82,15 @@ module.exports = {
             } catch (err) {
                 throw new Error(err);
             }
+        },
+        
+        deleteCost: async (parent, { id }, context) => {
+            try {
+                const deleted = await Cost.deleteOne({ _id: id })
+                return await deleted;
+            } catch (err) {
+                throw new Error(err);
+            }
         }
     }
 }
