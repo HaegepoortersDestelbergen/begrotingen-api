@@ -33,9 +33,7 @@ module.exports = {
             }
         },
         
-        group: async (parent, { id, access }, context) => {
-            console.log(access);
-            
+        group: async (parent, { id, access }, context) => {            
             try {
                 if (id) return await Group.find({ _id: id })
                 else return await Group.find({})
@@ -44,7 +42,8 @@ module.exports = {
             }
         },
         
-        user: async (parent, { id }, context) => {                        
+        user: async (parent, { id }, context) => {    
+            // check if id === id loged in user                    
             try {
                 if (id) return await User.find({ _id: id })
                 else return await User.find({})

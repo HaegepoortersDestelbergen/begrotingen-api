@@ -15,7 +15,7 @@ module.exports = gql`
     }
     
     input AccessInput {
-        budgetId: String
+        groupId: String
         type: String
     }
     
@@ -51,5 +51,6 @@ module.exports = gql`
         type: CostType
         when: CostWhen
         amount: Float
+        created: Date
     }
 `;

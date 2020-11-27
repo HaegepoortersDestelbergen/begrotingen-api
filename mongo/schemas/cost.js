@@ -7,5 +7,6 @@ module.exports = new Schema({
     category: String,
     type: String,
     when: String,
-    amount: Number
+    amount: Number,
+    created: Date  
 })

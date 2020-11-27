@@ -39,10 +39,15 @@ module.exports = {
             }
         },
         
-        addGroup: async (parent, { name, icon }, context) => {
+        addGroup: async (parent, { name, icon , id}, context) => {
             try {
-                const added = await Group.create({ name, icon })
-                return await added;
+                if (!id) {
+                    const added = await Group.create({ name, icon })
+                    return await added;
+                } else {
+                    const added = await Group.findOneAndUpdate({ _id: id}, { name, icon }, { new: true });
+                    return await added;
+                }
             } catch (err) {
                 console.log(err)
             }
@@ -57,13 +62,19 @@ module.exports = {
             }
         },
         
-        addBudget: async (parent, { budget }, context) => {            
+        addBudget: async (parent, { budget, id }, context) => {            
             try {
-                const added = await Budget.create({...budget, created: new Date()});
-                return await added;
+                if (!id) {
+                    const added = await Budget.create({...budget, created: new Date()});
+                    return await added;
+                } else {
+                    const added = await Budget.findOneAndUpdate({ _id: id}, { ...cost }, { new: true });
+                    return await added;
+                }
             } catch (err) {
                 throw new Error(err);
             }
+            
         },
         
         deleteBudget: async (parent, { id }, context) => {
@@ -75,10 +86,15 @@ module.exports = {
             }
         },
         
-        addCost: async (parent, { cost }, context) => {
+        addCost: async (parent, { cost, id }, context) => {   
             try {
-                const added = await Cost.create({...cost, created: new Date()});
-                return await added;
+                if (!id) {
+                    const added = await Cost.create({ ...cost, created: new Date() });
+                    return await added;
+                } else {
+                    const added = await Cost.findOneAndUpdate({ _id: id}, { ...cost }, { new: true });
+                    return await added;
+                }
             } catch (err) {
                 throw new Error(err);
             }

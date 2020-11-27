@@ -13,7 +13,7 @@ module.exports = gql`
     }
     
     type Access {
-        budgetId: String
+        groupId: String
         type: String
     }
     
@@ -42,6 +42,7 @@ module.exports = gql`
         type: CostType
         when: CostWhen
         amount: Float
+        created: Date
     }
     
     type People {
