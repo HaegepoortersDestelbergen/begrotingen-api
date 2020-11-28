@@ -11,7 +11,7 @@ const jwt = require('jsonwebtoken');
 
 mongoose.connect(
     `mongodb+srv://${MONGO_USER}:${MONGO_PWD}@${MONGO_CLUSTER}/${MONGO_DBNAME}?retryWrites=true&w=majority`,
-    { useNewUrlParser: true, useUnifiedTopology: true }
+    { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true }
 )
 
 const db = mongoose.connection;

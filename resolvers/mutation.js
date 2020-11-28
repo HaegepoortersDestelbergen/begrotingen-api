@@ -35,7 +35,7 @@ module.exports = {
                 const deleted = await User.deleteOne({ _id: id })
                 return await deleted;
             } catch (err) {
-                console.log(err)
+               throw new Error(err);
             }
         },
         
@@ -49,7 +49,7 @@ module.exports = {
                     return await added;
                 }
             } catch (err) {
-                console.log(err)
+                throw new Error(err);
             }
         },
         
@@ -62,13 +62,13 @@ module.exports = {
             }
         },
         
-        addBudget: async (parent, { budget, id }, context) => {            
+        addBudget: async (parent, { budget, id }, context) => {  
             try {
                 if (!id) {
                     const added = await Budget.create({...budget, created: new Date()});
                     return await added;
                 } else {
-                    const added = await Budget.findOneAndUpdate({ _id: id}, { ...cost }, { new: true });
+                    const added = await Budget.findOneAndUpdate({ _id: id}, { ...budget }, { new: true });
                     return await added;
                 }
             } catch (err) {

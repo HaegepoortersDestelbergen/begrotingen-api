@@ -7,15 +7,15 @@ module.exports = gql`
     deleteUser(id: String): User
     
     # mutate groups
-    addGroup(name: String, icon: String, id: String): Group
+    addGroup(name: String, icon: String, id: ID): Group
     deleteGroup(id: String): Group
     
     # mutate budgets
-    addBudget(budget: BudgetInput, id: String): Budget
+    addBudget(budget: BudgetInput, id: ID): Budget
     deleteBudget(id: String): Budget
     
     # mutate costs
-    addCost(cost: CostInput, id: String): Cost
+    addCost(cost: CostInput, id: ID): Cost
     deleteCost(id: String): Cost
   }
 `
