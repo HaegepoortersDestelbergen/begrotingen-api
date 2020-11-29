@@ -112,11 +112,10 @@ module.exports = {
         addShare: async (parent, { share, id}, context) => {
             try {
                 if (!id) {
-                    const added = await Share.create({ ...share });
-                    console.log(added);
+                    const added = await Share.create({ ...share, created: new Date() });
                     return await added;
                 } else {
-                    const added = await Share.findOneAndUpdate({ _id: id }, { ...share }, { new: true })
+                    const added = await Share.findOneAndUpdate({ _id: id }, { ...share, created: new Date() }, { new: true })
                     return await added;
                 }
             } catch (err) {

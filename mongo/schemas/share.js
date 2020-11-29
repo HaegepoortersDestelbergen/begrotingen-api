@@ -2,7 +2,8 @@ const { Schema } = require('mongoose');
 
 module.exports = new Schema({
     budgetId: String,
-    expires: Date,
+    expires: String,
     rights: String,
-    label: String
+    label: String,
+    created: Date
 })

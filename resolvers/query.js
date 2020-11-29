@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
 const budget = require('../mongo/schemas/budget');
 require('dotenv/config');
+const dayjs = require('dayjs')
 const { TOKEN_SALT } = process.env;
 
 module.exports = {
@@ -75,10 +76,7 @@ module.exports = {
         
         share: async (parent, { id, budgetId }, context) => {
             try {
-                if (id) {
-                    const found = await Share.find({ _id: id })
-                    return await found;
-                }
+                if (id) return await checkShareExpireDate(getShareByID(id))
                 else if (budgetId) return await Share.find({ budgetId: budgetId })
                 else return await Share.find({});
             } catch (err) {
@@ -87,4 +85,23 @@ module.exports = {
             }
         }
     },
+}
+
+const getShareByID = async (id) => {
+    const found = await Share.find({ _id: id })
+    return await found;
+}
+
+const checkShareExpireDate = async (share) => {    
+    // desctructure data
+    const [{ expires, created }] = await share;
+    const [ format, amount ] = await expires.split('_');
+    
+    // get max valid date
+    const maxDate = dayjs(created).add(parseFloat(await amount), await format.toLowerCase());
+    const diff = maxDate.diff(dayjs(), 'day');
+    
+    // return data
+    if (diff >= 0) return await share
+    else throw new Error('Share not valid anymore');
 }

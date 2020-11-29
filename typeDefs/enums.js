@@ -28,4 +28,12 @@ module.exports = gql`
         BENEFIT
         OTHER
     }
+    
+    enum ShareValid {
+        NEVER
+        WEEK_2
+        WEEK_4
+        MONTH_3
+        MONTH_6
+    }
 `;
