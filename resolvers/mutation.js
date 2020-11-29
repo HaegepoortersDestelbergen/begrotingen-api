@@ -1,5 +1,5 @@
 const pubsub = require('./pubsub');
-const { User, Group, Budget, Cost } = require('../mongo/models');
+const { User, Group, Budget, Cost, Share } = require('../mongo/models');
 const bcrypt = require('bcrypt');
 const { AuthenticationError } = require('apollo-server');
 
@@ -92,7 +92,7 @@ module.exports = {
                     const added = await Cost.create({ ...cost, created: new Date() });
                     return await added;
                 } else {
-                    const added = await Cost.findOneAndUpdate({ _id: id}, { ...cost }, { new: true });
+                    const added = await Cost.findOneAndUpdate({ _id: id }, { ...cost }, { new: true });
                     return await added;
                 }
             } catch (err) {
@@ -106,6 +106,31 @@ module.exports = {
                 return await deleted;
             } catch (err) {
                 throw new Error(err);
+            }
+        },
+        
+        addShare: async (parent, { share, id}, context) => {
+            try {
+                if (!id) {
+                    const added = await Share.create({ ...share });
+                    console.log(added);
+                    return await added;
+                } else {
+                    const added = await Share.findOneAndUpdate({ _id: id }, { ...share }, { new: true })
+                    return await added;
+                }
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        deleteShare: async (parent, { id }, context) => {
+            try {
+                const deleted = await Share.findOneAndDelete({ _id: id })
+                return await deleted;
+            } catch (err) {
+                throw new Error(err);
+                
             }
         }
     }

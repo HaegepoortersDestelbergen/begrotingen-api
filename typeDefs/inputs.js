@@ -53,4 +53,11 @@ module.exports = gql`
         amount: Float
         created: Date
     }
+    
+    input ShareInput {
+        budgetId: ID
+        expires: Date
+        rights: String
+        label: String
+    }
 `;

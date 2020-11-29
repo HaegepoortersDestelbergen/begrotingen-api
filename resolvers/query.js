@@ -1,4 +1,4 @@
-const { User, Group, Budget, Cost } = require('../mongo/models')
+const { User, Group, Budget, Cost, Share } = require('../mongo/models')
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
@@ -62,12 +62,27 @@ module.exports = {
             }
         },
         
-        cost: async (parent, {id, budgetId }, context) => {
+        cost: async (parent, { id, budgetId }, context) => {
+            // console.log(await Cost.find({ budgetId: budgetId }))
             try {
                 if (id) return await Cost.find({ _id: id })
                 else if (budgetId) return await Cost.find({ budgetId: budgetId })
                 else return await Cost.find({});
             } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        share: async (parent, { id, budgetId }, context) => {
+            try {
+                if (id) {
+                    const found = await Share.find({ _id: id })
+                    return await found;
+                }
+                else if (budgetId) return await Share.find({ budgetId: budgetId })
+                else return await Share.find({});
+            } catch (err) {
+                console.log(err);
                 throw new Error(err);
             }
         }

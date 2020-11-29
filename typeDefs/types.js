@@ -59,4 +59,12 @@ module.exports = gql`
         userId: String,
         token: String
     }
+    
+    type Share {
+        id: ID
+        budgetId: ID
+        expires: Date
+        rights: String
+        label: String
+    }
 `;

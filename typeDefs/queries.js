@@ -7,5 +7,6 @@ module.exports = gql`
     user(id: String): [User]
     budget(id: String, groupId: String): [Budget]
     cost(id: String, budgetId: String): [Cost]
+    share(id: String, budgetId: String): [Share]
   }
 `
