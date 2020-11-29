@@ -24,6 +24,8 @@ module.exports = gql`
         NIGHT
         INSURANCE
         GWE
+        GIFT
+        BENEFIT
         OTHER
     }
 `;
