@@ -63,6 +63,8 @@ module.exports = gql`
     type Share {
         id: ID
         budgetId: ID
+        budget: Budget
+        costs: [Cost]
         expires: ShareValid
         rights: String
         label: String

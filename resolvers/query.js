@@ -64,7 +64,8 @@ module.exports = {
         },
         
         cost: async (parent, { id, budgetId }, context) => {
-            // console.log(await Cost.find({ budgetId: budgetId }))
+            console.log(budgetId)
+            
             try {
                 if (id) return await Cost.find({ _id: id })
                 else if (budgetId) return await Cost.find({ budgetId: budgetId })
@@ -76,8 +77,21 @@ module.exports = {
         
         share: async (parent, { id, budgetId }, context) => {
             try {
-                if (id) return await checkShareExpireDate(getShareByID(id))
-                else if (budgetId) return await Share.find({ budgetId: budgetId })
+                // get share and budgetId
+                const foundShare = await getShareByID(id);
+                const foundShareBudgetId = foundShare[0].budgetId;
+                
+                // get budget data and all costs
+                const budgetFromShare = await Budget.find({ _id: foundShareBudgetId })
+                const costsFromShare = await Cost.find({ budgetId: foundShareBudgetId });
+                
+                // add budget data and costs to share data
+                foundShare[0].costs = costsFromShare;
+                foundShare[0].budget = budgetFromShare[0];
+                
+                // return data based on used params
+                if (id) return await checkShareExpireDate(foundShare);
+                else if (budgetId) return await Share.find({ budgetId: budgetId });
                 else return await Share.find({});
             } catch (err) {
                 console.log(err);
