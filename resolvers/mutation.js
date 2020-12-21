@@ -7,9 +7,7 @@ module.exports = {
     Mutation: {    
         register: async (parent, { user }, context) => {
             const { email, password } = user;
-            
-            console.log(user);
-            
+                        
             // check if user exists
             if (await User.exists({ email })) throw new Error('User already exists')
             
@@ -21,9 +19,7 @@ module.exports = {
                 ...user,
                 password: hashedPassword
             });
-            
-            console.log(newUser)
-            
+                        
             // reset password for security
             newUser.password = null;
             
