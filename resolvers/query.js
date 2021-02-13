@@ -4,7 +4,8 @@ const jwt = require('jsonwebtoken');
 const { AuthenticationError } = require('apollo-server');
 const budget = require('../mongo/schemas/budget');
 require('dotenv/config');
-const dayjs = require('dayjs')
+const dayjs = require('dayjs');
+const { calcCostWhen, calcCostType } = require('../utils');
 const { TOKEN_SALT } = process.env;
 
 module.exports = {
@@ -58,6 +59,21 @@ module.exports = {
                 if (id) return await Budget.find({ _id: id });
                 else if (groupId) return await Budget.find({ groupId: groupId });
                 else return await Budget.find({});
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        budgetTotal: async ( parent, { budgetId, people, days }) => {
+            console.log(budgetId, people, days);
+            try {
+                // const budget = await Budget.find({ _id: id })
+                const costs = await Cost.find({ budgetId })
+                return costs.reduce((curr, { when, type, amount, title }) => {
+                    const w = calcCostWhen(amount, when, days)
+                    const t = calcCostType(w, type, people)
+                    return curr + t
+                }, 0)
             } catch (err) {
                 throw new Error(err);
             }

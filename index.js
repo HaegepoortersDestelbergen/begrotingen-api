@@ -25,12 +25,11 @@ const server = new ApolloServer({
         try {
             const authHeader = req.headers['authorization'];
             const token = authHeader && authHeader.split(' ')[1];
-            
             const decodedToken = jwt.verify(token, TOKEN_SALT);
             
             return decodedToken && decodedToken.userId ? { 
                 userId: decodedToken.userId, 
-                admin: decodedToken.admin 
+                admin: decodedToken.admin
             } : null
         } catch (err) {
             return err
@@ -41,12 +40,10 @@ const server = new ApolloServer({
 db.on('error', console.error.bind(console, 'connection error'));
 db.once('open', () => {
     console.log('database connected')
-
-    server
-        .listen({
-            port: process.env.PORT || process.env.GRAPHQL_PORT || 4000
-        })
-        .then(({ url }) => {
-            console.log(`Server started at ${url}`);
-        });
+    server.listen({
+        port: process.env.PORT || process.env.GRAPHQL_PORT || 4000
+    })
+    .then(({ url }) => {
+        console.log(`Server started at ${url}`);
+    });
 })

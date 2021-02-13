@@ -62,10 +62,12 @@ module.exports = {
             try {
                 if (!id) {
                     const added = await Budget.create({...budget, created: new Date()});
-                    return await added;
+                    pubsub.publish('BUDGET_ADDED', { budgetAdded: { ...budget }})
+                    return added;
                 } else {
                     const added = await Budget.findOneAndUpdate({ _id: id}, { ...budget }, { new: true });
-                    return await added;
+                    pubsub.publish('BUDGET_ADDED', { budgetAdded: { ...budget }})
+                    return added;
                 }
             } catch (err) {
                 throw new Error(err);
@@ -86,10 +88,12 @@ module.exports = {
             try {
                 if (!id) {
                     const added = await Cost.create({ ...cost, created: new Date() });
-                    return await added;
+                    pubsub.publish('COST_ADDED', { costAdded: { ...cost }})
+                    return added;
                 } else {
                     const added = await Cost.findOneAndUpdate({ _id: id }, { ...cost }, { new: true });
-                    return await added;
+                    pubsub.publish('COST_ADDED', { costAdded: { ...cost }})
+                    return added;
                 }
             } catch (err) {
                 throw new Error(err);
@@ -125,7 +129,6 @@ module.exports = {
                 return await deleted;
             } catch (err) {
                 throw new Error(err);
-                
             }
         }
     }
