@@ -16,7 +16,7 @@ module.exports = gql`
     
     # mutate costs
     addCost(cost: CostInput, id: ID): Cost
-    deleteCost(id: String): Cost
+    deleteCost(cost: CostInput): ID
     
     # mutate shares
     addShare(share: ShareInput, id: ID): Share

@@ -5,14 +5,20 @@ module.exports = {
     Subscription: {
         budgetAdded: {
             subscribe: withFilter(
-                () => pubsub.asyncIterator('BUDGET_ADDED'),
+                () => pubsub.asyncIterator('BUDGET_EDIT'),
                 ({ budgetAdded: payload }, params) => payload.groupId === params.groupId
             )
         },
-        costAdded: {
+        costEdit: {
             subscribe: withFilter(
-                () => pubsub.asyncIterator('COST_ADDED'),
-                ({ costAdded: payload }, params) => payload.budgetId === params.budgetId
+                () => pubsub.asyncIterator('COST_EDIT'),
+                (payload, params) => payload.budgetId === params.budgetId
+            )
+        },
+        costDelete: {
+            subscribe: withFilter(
+                () => pubsub.asyncIterator('COST_DELETE'),
+                (payload, params) => params.budgetId === payload.budgetId
             )
         }
     }

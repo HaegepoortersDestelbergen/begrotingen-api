@@ -62,11 +62,11 @@ module.exports = {
             try {
                 if (!id) {
                     const added = await Budget.create({...budget, created: new Date()});
-                    pubsub.publish('BUDGET_ADDED', { budgetAdded: { ...budget }})
+                    pubsub.publish('BUDGET_EDIT', { budgetAdded: { ...budget }})
                     return added;
                 } else {
                     const added = await Budget.findOneAndUpdate({ _id: id}, { ...budget }, { new: true });
-                    pubsub.publish('BUDGET_ADDED', { budgetAdded: { ...budget }})
+                    pubsub.publish('BUDGET_EDIT', { budgetAdded: { ...budget }})
                     return added;
                 }
             } catch (err) {
@@ -85,14 +85,15 @@ module.exports = {
         },
         
         addCost: async (parent, { cost, id }, context) => {   
+            console.log(cost, id)
             try {
                 if (!id) {
                     const added = await Cost.create({ ...cost, created: new Date() });
-                    pubsub.publish('COST_ADDED', { costAdded: { ...cost }})
+                    await pubsub.publish('COST_EDIT', { ...cost })
                     return added;
                 } else {
                     const added = await Cost.findOneAndUpdate({ _id: id }, { ...cost }, { new: true });
-                    pubsub.publish('COST_ADDED', { costAdded: { ...cost }})
+                    await pubsub.publish('COST_EDIT', { ...cost })
                     return added;
                 }
             } catch (err) {
@@ -100,16 +101,18 @@ module.exports = {
             }
         },
         
-        deleteCost: async (parent, { id }, context) => {
+        deleteCost: async (parent, { id, cost }, context) => {
+            // console.log('COST', cost)
             try {
-                const deleted = await Cost.deleteOne({ _id: id })
-                return await deleted;
+                const deleted = await Cost.deleteOne({ _id: cost.id })
+                await pubsub.publish('COST_EDIT', { ...cost })
+                return cost.id;
             } catch (err) {
                 throw new Error(err);
             }
         },
         
-        addShare: async (parent, { share, id}, context) => {
+        addShare: async (parent, { share, id }, context) => {
             try {
                 if (!id) {
                     const added = await Share.create({ ...share, created: new Date() });

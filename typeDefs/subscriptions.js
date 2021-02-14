@@ -7,6 +7,7 @@ const  { gql } = require('apollo-server');
 module.exports = gql`
   type Subscription {
     budgetAdded(groupId: ID): Budget
-    costAdded(budgetId: ID): Cost
+    costEdit(budgetId: ID): Cost
+    costDelete(costId: ID): ID
   }
 `

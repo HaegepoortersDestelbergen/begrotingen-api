@@ -44,6 +44,7 @@ module.exports = gql`
     }
     
     input CostInput {
+        id: ID
         budgetId: ID
         title: String
         comment: String

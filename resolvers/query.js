@@ -65,7 +65,6 @@ module.exports = {
         },
         
         budgetTotal: async ( parent, { budgetId, people, days }) => {
-            console.log(budgetId, people, days);
             try {
                 // const budget = await Budget.find({ _id: id })
                 const costs = await Cost.find({ budgetId })
