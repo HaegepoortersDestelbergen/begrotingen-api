@@ -43,6 +43,7 @@ module.exports = gql`
         when: CostWhen
         amount: Float
         created: Date
+        order: Int
     }
     
     type People {

@@ -81,8 +81,16 @@ module.exports = {
         cost: async (parent, { id, budgetId }, context) => {            
             try {
                 if (id) return await Cost.find({ _id: id })
-                else if (budgetId) return await Cost.find({ budgetId: budgetId })
+                else if (budgetId) return await Cost.find({ budgetId: budgetId }).sort({ order: 'ascending' })
                 else return await Cost.find({});
+            } catch (err) {
+                throw new Error(err);
+            }
+        },
+        
+        costAmount: async (parent, { budgetId }) => {
+            try {
+                return await Cost.countDocuments({ budgetId: budgetId })
             } catch (err) {
                 throw new Error(err);
             }

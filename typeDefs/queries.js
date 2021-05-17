@@ -8,6 +8,7 @@ module.exports = gql`
     budget(id: String, groupId: String): [Budget]
     budgetTotal(budgetId: ID, people: PeopleInput, days: Int ): Float
     cost(id: String, budgetId: String): [Cost]
+    costAmount(budgetId: ID): Int
     share(id: String, budgetId: String): [Share]
   }
 `

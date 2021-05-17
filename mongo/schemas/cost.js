@@ -8,5 +8,6 @@ module.exports = new Schema({
     type: String,
     when: String,
     amount: Number,
-    created: Date  
+    created: Date,
+    order: Number
 })
